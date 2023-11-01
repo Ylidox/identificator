@@ -20,8 +20,10 @@
   "homepage": "https://github.com/Ylidox/identificator#readme",
   "dependencies": {
     "electron": "^27.0.2",
+    "node-machine-id": "^1.1.12",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "systeminformation": "^4.34.23"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
