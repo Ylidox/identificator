@@ -1,6 +1,25 @@
 const {BrowserWindow, app} = require('electron');
 const path = require('path');
 
+const {sn, getSystemInformation, defaultComputer} = require('./js/getinfo');
+
+let computer = defaultComputer();
+
+// const initComputer = async () => {
+//   computer = await getSystemInformation();
+// }
+const initComputer = () => {
+  sn(async (err, data) => {
+    computer.serialNumber = data;
+    const out = await getSystemInformation();
+    computer = {...out, serialNumber: computer.serialNumber}
+  });
+}
+
+initComputer();
+let timer;
+
+
 function createWindow(){
   const win = new BrowserWindow({
     width: 1200,
@@ -29,6 +48,8 @@ require('electron-reload')(__dirname, {
 app.on('window-all-closed', (event) => {
   event.preventDefault();
   app.quit();
+  clearInterval(timer);
 });
 
-console.log(new Date());
+const period = 1000;
+// timer = setInterval(() => {}, period);

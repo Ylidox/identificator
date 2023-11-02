@@ -1,22 +1,10 @@
 import React, {useEffect, useState} from 'react';
+import { defaultComputer } from '../../js/getinfo';
+
 
 export const SystemInformation = () => {
   let [serialNumber, setSerialNumber] = useState('');
-  let [system, setSystem] = useState({
-    serialNumber: '',
-    modelProc: '', 
-    arch: '',     
-    platform: '', 
-    distro: '',   
-    uniqueId: '', 
-    system: {
-      serial: '', 
-      model: '',  
-      manufacturer: '',
-      uuid: '',   
-      sku: '',
-    },
-  });
+  let [system, setSystem] = useState(defaultComputer());
   useEffect(() => {
     async function getComputerData(){
       let newSystem = await electron.getSystemInformation();
