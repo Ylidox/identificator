@@ -2,31 +2,34 @@ const {contextBridge, ipcRenderer} = require('electron');
 const os = require('os');
 const si = require('systeminformation');
 const machineId = require('node-machine-id');
+const sn = require('serial-number');
+sn.preferUUID = true;
 
 contextBridge.exposeInMainWorld('electron', {
   log(message){
     console.log(message)
   },
-  os,
-  si,
-  machineId,
-  getHostName(){
-    const os = require('os');
-    return this.os.hostname();
-  },
-  getSysteminformation: async () => {
-    let data = await si.system();
-    return data;
-  },
-  getSerialNumber(){
-    const { execSync } = require('child_process');
+  sn,
+  getSystemInformation: async () => {
+    let out = {system:{}};
+    let system = await si.system();
+    let osInfo = await si.osInfo();
+    out.platform = osInfo.platform;
+    out.distro = osInfo.distro;
+    out.arch = osInfo.arch;
+    out.modelProc = os.cpus()[0].model;
+    out.uniqueId = machineId.machineIdSync();
+    // out.serialNumber = '';
+    // sn((err, data) => out.serialNumber = data);
+    out.system.manufacturer = system.manufacturer;
+    out.system.model = system.model;
+    out.system.serial = system.serial;
+    out.system.uuid = system.uuid;
+    out.system.sku = system.sku;
 
-    // Получение серийного номера
-    const serialNumber = execSync('sudo dmidecode -s system-serial-number').toString().trim();
-    console.log('Серийный номер:', serialNumber);
-
-    // Получение UUID (универсального уникального идентификатора)
-    const uuid = execSync('sudo dmidecode -s system-uuid').toString().trim();
-    console.log('UUID:', uuid);
+    return out;
+  },
+  getSerialNumber(cb){
+    sn(cb);
   }
 });
