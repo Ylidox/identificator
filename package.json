@@ -6,9 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --config webpack.common.js --watch",
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make"
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
@@ -21,7 +19,6 @@
   },
   "homepage": "https://github.com/Ylidox/identificator#readme",
   "dependencies": {
-    "@electron-forge/cli": "^6.4.2",
     "electron-squirrel-startup": "^1.0.0",
     "node-machine-id": "^1.1.12",
     "react": "^18.2.0",
