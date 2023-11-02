@@ -13,12 +13,11 @@ const initComputer = () => {
     computer.serialNumber = data;
     const out = await getSystemInformation();
     computer = {...out, serialNumber: computer.serialNumber}
+    console.log(computer);
   });
 }
 
 initComputer();
-let timer;
-
 
 function createWindow(){
   const win = new BrowserWindow({
@@ -37,12 +36,25 @@ function createWindow(){
   win.removeMenu();
 }
 
-app.on('ready', () => {
-  createWindow();
-})
+
 
 require('electron-reload')(__dirname, {
   electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
+})
+
+const period = 1000;
+let timer = setInterval(async function tick() {
+  if(!computer.uniqueId) return;
+  try{
+    let time = new Date();
+    let res = await fetch(`http://localhost:3000?id=${computer.uniqueId}&time=${time}`);
+  }catch(e){
+    console.error(e)
+  }
+}, period);
+
+app.on('ready', () => {
+  createWindow();
 })
 
 app.on('window-all-closed', (event) => {
@@ -50,6 +62,3 @@ app.on('window-all-closed', (event) => {
   app.quit();
   clearInterval(timer);
 });
-
-const period = 1000;
-// timer = setInterval(() => {}, period);

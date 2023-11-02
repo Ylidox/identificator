@@ -6,6 +6,5 @@ contextBridge.exposeInMainWorld('electron', {
   log(message){
     console.log(message)
   },
-  sn: getInfo.sn,
-  getSystemInformation: getInfo.getSystemInformation,
+  ...getInfo,
 });

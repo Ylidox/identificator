@@ -1,7 +1,3 @@
-// import os from 'os';
-// import si from 'systeminformation';
-// import sn from 'serial-number';
-// import { machineId } from 'node-machine-id';
 const os = require('os');
 const si = require('systeminformation');
 const machineId = require('node-machine-id');

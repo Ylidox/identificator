@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import { defaultComputer } from '../../js/getinfo';
 
 
 export const SystemInformation = () => {
   let [serialNumber, setSerialNumber] = useState('');
-  let [system, setSystem] = useState(defaultComputer());
+  let [system, setSystem] = useState(electron.defaultComputer());
   useEffect(() => {
     async function getComputerData(){
       let newSystem = await electron.getSystemInformation();
@@ -18,20 +17,20 @@ export const SystemInformation = () => {
     })
   }, []);
 
-  useEffect(() => {
-    if(!system.uniqueId) return;
-    let period = 5000;
-    let timer = setInterval(async function tick() {
-      try{
-        let time = new Date();
-        let res = await fetch(`http://localhost:3000?id=${system.uniqueId}&time=${time}`);
-      }catch(e){
-        console.error(e)
-      }
-    }, period);
+  // useEffect(() => {
+  //   if(!system.uniqueId) return;
+  //   let period = 5000;
+  //   let timer = setInterval(async function tick() {
+  //     try{
+  //       let time = new Date();
+  //       let res = await fetch(`http://localhost:3000?id=${system.uniqueId}&time=${time}`);
+  //     }catch(e){
+  //       console.error(e)
+  //     }
+  //   }, period);
     
-    return () => clearInterval(timer);
-  }, [system]);
+  //   return () => clearInterval(timer);
+  // }, [system]);
 
   return (
     <>
