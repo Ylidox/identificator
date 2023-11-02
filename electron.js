@@ -6,6 +6,7 @@ function createWindow(){
     width: 1200,
     height: 500,
     webPreferences: {
+      frame: 0,
       nodeIntegration: true,
       contextIsolation: true,
       preload: path.join(__dirname, 'js', 'preload.js'),
@@ -13,6 +14,8 @@ function createWindow(){
   });
 
   win.loadFile('index.html');
+  win.webContents.openDevTools()
+  
 }
 
 app.on('ready', () => {
@@ -23,4 +26,7 @@ require('electron-reload')(__dirname, {
   electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
 })
 
-// require('electron-reloader')(module)
+app.on('window-all-closed', (event) => {
+  event.preventDefault();
+  app.quit();
+});

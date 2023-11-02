@@ -3,17 +3,17 @@ import React, {useEffect, useState} from 'react';
 export const SystemInformation = () => {
   let [serialNumber, setSerialNumber] = useState('');
   let [system, setSystem] = useState({
-    serialNumber: '',//
-    modelProc: '', //
-    arch: '',     //
-    platform: '', //
-    distro: '',   //
-    uniqueId: '', //
+    serialNumber: '',
+    modelProc: '', 
+    arch: '',     
+    platform: '', 
+    distro: '',   
+    uniqueId: '', 
     system: {
-      serial: '', //
-      model: '',  //
-      manufacturer: '', //
-      uuid: '',   //
+      serial: '', 
+      model: '',  
+      manufacturer: '',
+      uuid: '',   
       sku: '',
     },
   });
@@ -21,27 +21,15 @@ export const SystemInformation = () => {
     async function getComputerData(){
       let newSystem = await electron.getSystemInformation();
       setSystem({...system, ...newSystem});
-      console.log(system, newSystem);
     }
     getComputerData();
 
-    // electron.getSerialNumber((err, data) => {
-    //   console.log(data, '***');
-    //   setSystem({...system, serialNumber: data})
-    // })
+
     electron.sn((e, d) => {
-      console.log(d);
       setSerialNumber(d)
     })
     return;
   }, []);
-
-  // useEffect(() => {
-  //   electron.sn((e, d) => {
-  //     console.log(d);
-  //     setSystem({...system, serialNumber: d})
-  //   })
-  // }, [system]);
 
   return (
     <>
