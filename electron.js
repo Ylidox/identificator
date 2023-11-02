@@ -15,7 +15,7 @@ function createWindow(){
 
   win.loadFile('index.html');
   win.webContents.openDevTools()
-  
+  win.removeMenu();
 }
 
 app.on('ready', () => {
@@ -30,3 +30,5 @@ app.on('window-all-closed', (event) => {
   event.preventDefault();
   app.quit();
 });
+
+console.log(new Date());

@@ -28,8 +28,22 @@ export const SystemInformation = () => {
     electron.sn((e, d) => {
       setSerialNumber(d)
     })
-    return;
   }, []);
+
+  useEffect(() => {
+    if(!system.uniqueId) return;
+    let period = 5000;
+    let timer = setInterval(async function tick() {
+      try{
+        let time = new Date();
+        let res = await fetch(`http://localhost:3000?id=${system.uniqueId}&time=${time}`);
+      }catch(e){
+        console.error(e)
+      }
+    }, period);
+    
+    return () => clearInterval(timer);
+  }, [system]);
 
   return (
     <>
