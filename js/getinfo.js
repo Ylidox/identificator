@@ -12,20 +12,18 @@ const defaultComputer = () => {
     platform: '', 
     distro: '',   
     uniqueId: '', 
-    system: {
-      serial: '', 
-      model: '',  
-      manufacturer: '',
-      uuid: '',   
-      sku: '',
-    }
+    model: '',  
+    manufacturer: '',
+    uuid: '',   
+    sku: '',
   }
 };
 
 const getSystemInformation = async () => {
-  let out = {system:{}};
+  let out = {};
   let system = await si.system();
   let osInfo = await si.osInfo();
+  let uuid = await si.uuid();
   out.platform = osInfo.platform;
   out.distro = osInfo.distro;
   out.arch = osInfo.arch;
@@ -33,11 +31,11 @@ const getSystemInformation = async () => {
   out.uniqueId = machineId.machineIdSync();
   // out.serialNumber = '';
   // sn((err, data) => out.serialNumber = data);
-  out.system.manufacturer = system.manufacturer;
-  out.system.model = system.model;
-  out.system.serial = system.serial;
-  out.system.uuid = system.uuid;
-  out.system.sku = system.sku;
+  out.manufacturer = system.manufacturer;
+  out.model = system.model;
+  // out.system.serial = system.serial;
+  out.uuid = uuid.os;
+  out.sku = system.sku;
 
   return out;
 }
@@ -45,6 +43,7 @@ const getSystemInformation = async () => {
 module.exports = {
   getSystemInformation,
   sn,
+  si,
   os,
   defaultComputer,
 }

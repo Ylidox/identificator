@@ -5,9 +5,6 @@ const {sn, getSystemInformation, defaultComputer} = require('./js/getinfo');
 
 let computer = defaultComputer();
 
-// const initComputer = async () => {
-//   computer = await getSystemInformation();
-// }
 const initComputer = () => {
   sn(async (err, data) => {
     computer.serialNumber = data;
@@ -36,14 +33,12 @@ function createWindow(){
   win.removeMenu();
 }
 
-
-
 require('electron-reload')(__dirname, {
   electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
 })
 
-const period = 1000;
-let timer = setInterval(async function tick() {
+const period = 10000;
+const tick = async () => {
   if(!computer.uniqueId) return;
   try{
     let time = new Date();
@@ -51,7 +46,10 @@ let timer = setInterval(async function tick() {
   }catch(e){
     console.error(e)
   }
-}, period);
+}
+
+tick();
+let timer = setInterval(tick, period);
 
 app.on('ready', () => {
   createWindow();

@@ -7,7 +7,7 @@ export const SystemInformation = () => {
   useEffect(() => {
     async function getComputerData(){
       let newSystem = await electron.getSystemInformation();
-      setSystem({...system, ...newSystem});
+      setSystem(newSystem);
     }
     getComputerData();
 
@@ -17,28 +17,13 @@ export const SystemInformation = () => {
     })
   }, []);
 
-  // useEffect(() => {
-  //   if(!system.uniqueId) return;
-  //   let period = 5000;
-  //   let timer = setInterval(async function tick() {
-  //     try{
-  //       let time = new Date();
-  //       let res = await fetch(`http://localhost:3000?id=${system.uniqueId}&time=${time}`);
-  //     }catch(e){
-  //       console.error(e)
-  //     }
-  //   }, period);
-    
-  //   return () => clearInterval(timer);
-  // }, [system]);
-
   return (
     <>
       <h1>Информация о компьютере</h1>
       <ul>
-        <li>Модель компьютера: {system.system.model}</li>
+        <li>Модель компьютера: {system.model}</li>
         <li>Модель процессора: {system.modelProc}</li>
-        <li>Производитель: {system.system.manufacturer}</li>
+        <li>Производитель: {system.manufacturer}</li>
         <li>Архитектура: {system.arch}</li>
         <li>Операционная система: {system.platform}</li>
         {system.platform == 'linux' && 
