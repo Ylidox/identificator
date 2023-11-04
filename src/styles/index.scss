@@ -1,4 +1,12 @@
-h1{
-  color: red;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+@font-face {
+  font-family: 'Montserrat';
+  src: url(./fonts/Montserrat-VariableFont_wght.ttf) format('truetype');
+}
+
+*{
+  font-family: 'Montserrat';
+}
+
+html,body{
+  margin: 0;
 }

@@ -1,6 +1,9 @@
 const {BrowserWindow, app} = require('electron');
 const path = require('path');
 
+
+// autoload();
+
 const {sn, getSystemInformation, defaultComputer} = require('./js/getinfo');
 
 let computer = defaultComputer();
