@@ -45,7 +45,10 @@ const autoload = () => {
         isEnabledAutoload: isEnabledAutoloadUbuntu,
       }
     default:
-      return () => console.log(`неопознанная ОС: ${currentOs}`);
+      return {
+        enableAutoload:  () => console.log(`неопознанная ОС: ${currentOs}`),
+        isEnabledAutoload: async () => false,
+      }
   }
 }
 

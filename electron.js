@@ -49,8 +49,8 @@ const tick = async () => {
   }
 }
 
-tick();
-let timer = setInterval(tick, period);
+// tick();
+let timer;
 
 app.on('ready', async () => {
   const argv = process.argv;
@@ -59,8 +59,9 @@ app.on('ready', async () => {
   let isEnabledAutoload = await autoload.isEnabledAutoload();
   if(!isEnabledAutoload) autoload.enableAutoload();
 
-  if(!argv.includes('hidden')) 
+  if(!argv.includes('hidden'))
     createWindow();
+  else timer = setInterval(tick, period);
 })
 
 app.on('window-all-closed', (event) => {
