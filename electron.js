@@ -1,8 +1,6 @@
 const {BrowserWindow, app} = require('electron');
 const path = require('path');
-
-
-// autoload();
+const autoload = require('./js/autoload');
 
 const {sn, getSystemInformation, defaultComputer} = require('./js/getinfo');
 
@@ -36,9 +34,9 @@ function createWindow(){
   win.removeMenu();
 }
 
-require('electron-reload')(__dirname, {
-  electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
-})
+// require('electron-reload')(__dirname, {
+//   electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
+// })
 
 const period = 10000;
 const tick = async () => {
@@ -54,12 +52,21 @@ const tick = async () => {
 tick();
 let timer = setInterval(tick, period);
 
-app.on('ready', () => {
-  createWindow();
+app.on('ready', async () => {
+  const argv = process.argv;
+  console.log('argv ', argv);
+
+  let isEnabledAutoload = await autoload.isEnabledAutoload();
+  if(!isEnabledAutoload) autoload.enableAutoload();
+
+  if(!argv.includes('hidden')) 
+    createWindow();
 })
 
 app.on('window-all-closed', (event) => {
   event.preventDefault();
-  app.quit();
-  clearInterval(timer);
+  // app.quit();
+  // clearInterval(timer);
 });
+
+// /usr/lib/identificator/identificator
